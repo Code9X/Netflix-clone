@@ -47,7 +47,15 @@ jobs:
           docker build -t ghcr.io/code9x/netflix-backend:${{ steps.version.outputs.tag }} ./Netflix-Backend
           docker push ghcr.io/code9x/netflix-backend:${{ steps.version.outputs.tag }}
 
+          # Also tag and push as latest
+          docker tag ghcr.io/code9x/netflix-backend:${{ steps.version.outputs.tag }} ghcr.io/code9x/netflix-backend:latest
+          docker push ghcr.io/code9x/netflix-backend:latest
+
       - name: Build & Push Frontend Image
         run: |
           docker build -t ghcr.io/code9x/netflix-frontend:${{ steps.version.outputs.tag }} ./Netflix-Frontend
           docker push ghcr.io/code9x/netflix-frontend:${{ steps.version.outputs.tag }}
+
+          # Also tag and push as latest
+          docker tag ghcr.io/code9x/netflix-frontend:${{ steps.version.outputs.tag }} ghcr.io/code9x/netflix-frontend:latest
+          docker push ghcr.io/code9x/netflix-frontend:latest
