@@ -25,16 +25,16 @@ jobs:
 
       - name: Build Backend Image
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/netflix-backend:latest ./Netflix-Backend
+          docker build -t ghcr.io/code9x/netflix-backend:latest ./Netflix-Backend
 
       - name: Build Frontend Image
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/netflix-frontend:latest ./Netflix-Frontend
+          docker build -t ghcr.io/code9x/netflix-frontend:latest ./Netflix-Frontend
 
       - name: Run Backend Container
         run: |
-          docker run -d --name netflix-backend -p 9090:8080 ghcr.io/${{ github.repository_owner }}/netflix-backend:latest
+          docker run -d --rm --name netflix-backend -p 9090:8080 ghcr.io/code9x/netflix-backend:latest
 
       - name: Run Frontend Container
         run: |
-          docker run -d --name netflix-frontend -p 5173:5173 ghcr.io/${{ github.repository_owner }}/netflix-frontend:latest
+          docker run -d --rm --name netflix-frontend -p 5173:5173 ghcr.io/code9x/netflix-frontend:latest
