@@ -1,0 +1,64 @@
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\bin\Debug\net8.0\appsettings.Development.json
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\bin\Debug\net8.0\appsettings.json
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\bin\Debug\net8.0\netflix-backend.exe
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\bin\Debug\net8.0\netflix-backend.deps.json
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\bin\Debug\net8.0\netflix-backend.runtimeconfig.json
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\bin\Debug\net8.0\netflix-backend.dll
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\bin\Debug\net8.0\netflix-backend.pdb
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\bin\Debug\net8.0\Microsoft.OpenApi.dll
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\obj\Debug\net8.0\netflix-backend.csproj.AssemblyReference.cache
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\obj\Debug\net8.0\netflix-backend.GeneratedMSBuildEditorConfig.editorconfig
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\obj\Debug\net8.0\netflix-backend.AssemblyInfoInputs.cache
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\obj\Debug\net8.0\netflix-backend.AssemblyInfo.cs
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\obj\Debug\net8.0\netflix-backend.csproj.CoreCompileInputs.cache
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\obj\Debug\net8.0\netflix-backend.MvcApplicationPartsAssemblyInfo.cs
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\obj\Debug\net8.0\netflix-backend.MvcApplicationPartsAssemblyInfo.cache
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\obj\Debug\net8.0\staticwebassets.build.json
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\obj\Debug\net8.0\staticwebassets.development.json
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\obj\Debug\net8.0\staticwebassets\msbuild.netflix-backend.Microsoft.AspNetCore.StaticWebAssets.props
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\obj\Debug\net8.0\staticwebassets\msbuild.build.netflix-backend.props
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.netflix-backend.props
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.netflix-backend.props
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\obj\Debug\net8.0\staticwebassets.pack.json
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\obj\Debug\net8.0\scopedcss\bundle\netflix-backend.styles.css
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\obj\Debug\net8.0\netflix-.33825B65.Up2Date
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\obj\Debug\net8.0\netflix-backend.dll
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\obj\Debug\net8.0\refint\netflix-backend.dll
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\obj\Debug\net8.0\netflix-backend.pdb
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\obj\Debug\net8.0\netflix-backend.genruntimeconfig.cache
+D:\Working Folder\Projects\Streamify - Main\netflix-backend\obj\Debug\net8.0\ref\netflix-backend.dll
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\bin\Debug\net8.0\appsettings.Development.json
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\bin\Debug\net8.0\appsettings.json
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\bin\Debug\net8.0\netflix-backend.exe
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\bin\Debug\net8.0\netflix-backend.deps.json
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\bin\Debug\net8.0\netflix-backend.runtimeconfig.json
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\bin\Debug\net8.0\netflix-backend.dll
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\bin\Debug\net8.0\netflix-backend.pdb
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\bin\Debug\net8.0\Microsoft.OpenApi.dll
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\obj\Debug\net8.0\netflix-backend.csproj.AssemblyReference.cache
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\obj\Debug\net8.0\netflix-backend.GeneratedMSBuildEditorConfig.editorconfig
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\obj\Debug\net8.0\netflix-backend.AssemblyInfoInputs.cache
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\obj\Debug\net8.0\netflix-backend.AssemblyInfo.cs
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\obj\Debug\net8.0\netflix-backend.csproj.CoreCompileInputs.cache
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\obj\Debug\net8.0\netflix-backend.MvcApplicationPartsAssemblyInfo.cs
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\obj\Debug\net8.0\netflix-backend.MvcApplicationPartsAssemblyInfo.cache
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\obj\Debug\net8.0\staticwebassets.build.json
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\obj\Debug\net8.0\staticwebassets.development.json
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\obj\Debug\net8.0\staticwebassets\msbuild.netflix-backend.Microsoft.AspNetCore.StaticWebAssets.props
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\obj\Debug\net8.0\staticwebassets\msbuild.build.netflix-backend.props
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.netflix-backend.props
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.netflix-backend.props
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\obj\Debug\net8.0\staticwebassets.pack.json
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\obj\Debug\net8.0\scopedcss\bundle\netflix-backend.styles.css
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\obj\Debug\net8.0\netflix-.33825B65.Up2Date
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\obj\Debug\net8.0\netflix-backend.dll
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\obj\Debug\net8.0\refint\netflix-backend.dll
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\obj\Debug\net8.0\netflix-backend.pdb
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\obj\Debug\net8.0\netflix-backend.genruntimeconfig.cache
+D:\Working Folder\Projects\Netflix-Clone\Netflix-Backend\obj\Debug\net8.0\ref\netflix-backend.dll

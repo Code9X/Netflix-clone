@@ -1,0 +1,117 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Working Folder\\Projects\\Netflix-Clone\\Netflix-Backend\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{0C2D0842-240F-4629-9142-53ECE4A65999}|netflix-backend.csproj|d:\\working folder\\projects\\netflix-clone\\netflix-backend\\repository\\impl\\movierepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C2D0842-240F-4629-9142-53ECE4A65999}|netflix-backend.csproj|solutionrelative:repository\\impl\\movierepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0C2D0842-240F-4629-9142-53ECE4A65999}|netflix-backend.csproj|d:\\working folder\\projects\\netflix-clone\\netflix-backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C2D0842-240F-4629-9142-53ECE4A65999}|netflix-backend.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0C2D0842-240F-4629-9142-53ECE4A65999}|netflix-backend.csproj|d:\\working folder\\projects\\netflix-clone\\netflix-backend\\models\\response\\movielistresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C2D0842-240F-4629-9142-53ECE4A65999}|netflix-backend.csproj|solutionrelative:models\\response\\movielistresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0C2D0842-240F-4629-9142-53ECE4A65999}|netflix-backend.csproj|d:\\working folder\\projects\\netflix-clone\\netflix-backend\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{0C2D0842-240F-4629-9142-53ECE4A65999}|netflix-backend.csproj|solutionrelative:dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0C2D0842-240F-4629-9142-53ECE4A65999}|netflix-backend.csproj|d:\\working folder\\projects\\netflix-clone\\netflix-backend\\controllers\\moviecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C2D0842-240F-4629-9142-53ECE4A65999}|netflix-backend.csproj|solutionrelative:controllers\\moviecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Dockerfile",
+              "DocumentMoniker": "D:\\Working Folder\\Projects\\Netflix-Clone\\Netflix-Backend\\Dockerfile",
+              "RelativeDocumentMoniker": "Dockerfile",
+              "ToolTip": "D:\\Working Folder\\Projects\\Netflix-Clone\\Netflix-Backend\\Dockerfile",
+              "RelativeToolTip": "Dockerfile",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-03-16T06:53:23.679Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MovieListResponse.cs",
+              "DocumentMoniker": "D:\\Working Folder\\Projects\\Netflix-Clone\\Netflix-Backend\\Models\\Response\\MovieListResponse.cs",
+              "RelativeDocumentMoniker": "Models\\Response\\MovieListResponse.cs",
+              "ToolTip": "D:\\Working Folder\\Projects\\Netflix-Clone\\Netflix-Backend\\Models\\Response\\MovieListResponse.cs",
+              "RelativeToolTip": "Models\\Response\\MovieListResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAgAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T06:46:13.43Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Working Folder\\Projects\\Netflix-Clone\\Netflix-Backend\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\Working Folder\\Projects\\Netflix-Clone\\Netflix-Backend\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T06:40:34.776Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MovieRepository.cs",
+              "DocumentMoniker": "D:\\Working Folder\\Projects\\Netflix-Clone\\Netflix-Backend\\Repository\\impl\\MovieRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\impl\\MovieRepository.cs",
+              "ToolTip": "D:\\Working Folder\\Projects\\Netflix-Clone\\Netflix-Backend\\Repository\\impl\\MovieRepository.cs",
+              "RelativeToolTip": "Repository\\impl\\MovieRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T06:33:59.044Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MovieController.cs",
+              "DocumentMoniker": "D:\\Working Folder\\Projects\\Netflix-Clone\\Netflix-Backend\\Controllers\\MovieController.cs",
+              "RelativeDocumentMoniker": "Controllers\\MovieController.cs",
+              "ToolTip": "D:\\Working Folder\\Projects\\Netflix-Clone\\Netflix-Backend\\Controllers\\MovieController.cs",
+              "RelativeToolTip": "Controllers\\MovieController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T06:32:30.643Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

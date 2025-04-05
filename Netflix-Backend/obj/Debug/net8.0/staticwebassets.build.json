@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "iEzLd+VwrZ9G2ubYTrN18HskbqoZ9CNVXjO8GESe0BE=",
+  "Source": "netflix-backend",
+  "BasePath": "_content/netflix-backend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
