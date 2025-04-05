@@ -80,7 +80,7 @@ function Home() {
           <img src={hero_title} alt="Hero Title" className='caption-img' />
           <p>
             Discovering his ties to a secret ancient order, a young man living in modern 
-            Istanbul embarks on a quest to save the city from an immortal enemy.
+            Istanbul embarks on a quest to save the city from an immortal enemy. ~Sebin
           </p>
           <div className="hero-btns">
             <button className='btn' onClick={handlePlayClick}>
