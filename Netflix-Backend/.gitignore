@@ -1,0 +1,30 @@
+﻿## .NET Core
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## ASP.NET
+*.dbmdl
+*.jfm
+*.pdb
+*.cache
+*.log
+*.vspscc
+*.vssscc
+
+## Rider & VSCode
+.idea/
+.vscode/
+
+## Environment
+.env
+secrets.json
+appsettings.*.json
+
+## Others
+*.sw?
+*.DS_Store
+*.njsproj
