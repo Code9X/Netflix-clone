@@ -1,30 +1,30 @@
 import React from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import './Player.css';
-import back_arrow_icon from '../../assets/back_arrow_icon.png';
-import { useNavigate } from 'react-router-dom';
 
-const Player = () => {
-
+function Player() {
+  const { state } = useLocation();
   const navigate = useNavigate();
+  const { embedUrl } = state || {};
+  const { movieId } = useParams();
+
+  if (!embedUrl) {
+    return <p className="no-trailer">No trailer available.</p>;
+  }
 
   return (
-    <div className='player'>
-      <img src={back_arrow_icon} alt="Back" onClick={() => navigate('/')} />
+    <div className="player-wrapper">
+      <button className="back-button" onClick={() => navigate(-1)}>← Back</button>
       <iframe
-        width='90%'
-        height='90%'
-        src='https://www.youtube.com/embed/hkHHwA-vEyQ'
-        title='trailer'
-        frameBorder='0'
+        className="video-frame"
+        src={embedUrl}
+        title={`Movie Trailer ${movieId}`}
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
       ></iframe>
-      <div className="player-info">
-        <p>Published Date</p>
-        <p>Name</p>
-        <p>Type</p>
-      </div>
     </div>
   );
-};
+}
 
 export default Player;
