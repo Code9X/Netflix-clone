@@ -4,6 +4,7 @@ namespace netflix_backend.Services
 {
     public interface IMovieService
     {
-        Task<MovieListResponse> GetMovieListAsync(string? title, string? type, string? year, int? page);
+        Task<MovieListResponse> GetMovieListAsync(string? title, string? type, string? fromDate, string? toDate, int? page);
+        Task<string?> GetVideoURL(int movieId);
     }
 }

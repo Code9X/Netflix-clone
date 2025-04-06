@@ -5,6 +5,10 @@ using netflix_backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Access to appsettings.json
+var configuration = builder.Configuration;
+
+// Register Controllers and Swagger
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -16,6 +20,10 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 
+// Register IConfiguration so it can be injected
+builder.Services.AddSingleton<IConfiguration>(configuration);
+
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
@@ -33,9 +41,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseCors("AllowAll");
-
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

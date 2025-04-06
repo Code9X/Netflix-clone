@@ -1,4 +1,5 @@
-﻿using netflix_backend.Models.Response;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using netflix_backend.Models.Response;
 using netflix_backend.Repository;
 
 namespace netflix_backend.Services.impl
@@ -10,9 +11,14 @@ namespace netflix_backend.Services.impl
         {
             _movieRepository = movieRepository;
         }
-        public Task<MovieListResponse> GetMovieListAsync(string? title, string? type, string? year, int? page)
+        public Task<MovieListResponse> GetMovieListAsync(string? title, string? type, string? fromDate, string? toDate, int? page)
         {
-            return _movieRepository.GetMovieListAsync(title, type, year, page);
+            return _movieRepository.GetMovieListAsync(title, type, fromDate, toDate, page);
+        }
+
+        public Task<string?> GetVideoURL(int movieId)
+        {
+            return _movieRepository.GetVideoURL(movieId);
         }
     }
 }
