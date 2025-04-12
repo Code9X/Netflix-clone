@@ -5,12 +5,18 @@ import staticMovies from '../../assets/cards/Cards_data';
 
 const fetchCache = new Map();
 
-function TitleCards({ title, type = null }) {
+function TitleCards({ title,category=null, type = null }) {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [useStatic, setUseStatic] = useState(false);
-  const API_URL = import.meta.env.VITE_MOVIE_API + "/api/Movie/Get";
+  let API_URL;
+  if (category === "tvshows") {
+    API_URL = import.meta.env.VITE_MOVIE_API + "/api/TV/Get";
+  } else {
+    API_URL = import.meta.env.VITE_MOVIE_API + "/api/Movie/Get";
+  }  
+
   const listRef = useRef(null);
   const observerRef = useRef(null);
   const navigate = useNavigate();
@@ -34,7 +40,7 @@ function TitleCards({ title, type = null }) {
       if (type) url += `&type=${encodeURIComponent(normalizedType)}`;
 
       const response = await fetch(url);
-      const data = await response.json(); // ✅ JSON for movie list
+      const data = await response.json();
 
       if (data?.results?.length > 0) {
         const mappedMovies = data.results
@@ -84,9 +90,9 @@ function TitleCards({ title, type = null }) {
 
   const handleCardClick = async (movieId) => {
     try {
-      const videoApiUrl = `${import.meta.env.VITE_MOVIE_API}/api/Movie/VideoURL?movieId=${movieId}`;
+      const videoApiUrl = `${import.meta.env.VITE_MOVIE_API}/api/Get/VideoURL?movieId=${movieId}`;
       const response = await fetch(videoApiUrl);
-      const embedUrl = await response.text(); // ✅ Plain text for video URL
+      const embedUrl = await response.text();
 
       if (!embedUrl) {
         alert("No trailer found.");
@@ -124,7 +130,7 @@ function TitleCards({ title, type = null }) {
 
   return (
     <div className='title-cards'>
-      <h2>{title ? title : 'Popular Movies'}</h2>
+      <h2>{title ? title : 'Popular'}</h2>
       <div className="card-list" ref={listRef}>
         {movies.map((movie, index) => (
           <div
