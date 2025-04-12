@@ -38,29 +38,26 @@ function Home() {
   
     setLoading(true);
     try {
-      const videoApiUrl = `${import.meta.env.VITE_MOVIE_API}/api/Movie/VideoURL?movieId=${heroMovie.id}`;
+      const videoApiUrl = `${import.meta.env.VITE_MOVIE_API}/api/Get/VideoURL?movieId=${heroMovie.id}`;
       const response = await fetch(videoApiUrl);
-      const data = await response.json();
+      const embedUrl = await response.text();
   
-      if (data?.url) {
-        navigate(`/player/${heroMovie.id}`, { state: { embedUrl: data.url } });
+      if (embedUrl && embedUrl.startsWith("https://www.youtube.com/embed/")) {
+        navigate(`/player/${heroMovie.id}`, { state: { embedUrl } });
       } else {
-        const searchQuery = encodeURIComponent(heroMovie.title + ' official trailer');
-        const fallbackVideoId = searchQuery.split('=')[1];
-        const fallbackEmbedUrl = `https://www.youtube.com/embed/${fallbackVideoId}`;
-        
-        navigate(`/player/${heroMovie.id}`, { state: { embedUrl: fallbackEmbedUrl } });
+        navigate(`/player/${heroMovie.id}`, {
+          state: { embedUrl: "https://www.youtube.com/embed/T6DJcgm3wNY" },
+        });
       }
     } catch (error) {
       console.error("Error fetching trailer URL:", error);
-      const fallbackVideoId = "9KVG_X_7Naw";
-      const fallbackEmbedUrl = `https://www.youtube.com/embed/${fallbackVideoId}`;
-      navigate(`/player/${heroMovie.id}`, { state: { embedUrl: fallbackEmbedUrl } });
+      navigate(`/player/${heroMovie.id}`, {
+        state: { embedUrl: "https://www.youtube.com/embed/T6DJcgm3wNY" },
+      });
     } finally {
       setLoading(false);
     }
   };
-  
 
   const handleMoreInfoClick = async () => {
     if (!heroMovie) return;
