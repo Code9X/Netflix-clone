@@ -175,7 +175,6 @@ namespace netflix_backend.Repository.impl
                               ?? videoData?.Results?
                               .FirstOrDefault(v => v.Site == "YouTube" && v.Type == "Teaser");
 
-                //return trailer != null ? $"https://www.youtube.com/watch?v={trailer.Key}" : null;
                 return trailer != null ? $"https://www.youtube.com/embed/{trailer.Key}" : null;
             }
             catch
