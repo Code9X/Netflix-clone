@@ -59,16 +59,16 @@ jobs:
 
       - name: Build & Push Backend Image
         run: |
-          docker build -t public.ecr.aws/561966465122/netflix-clone/backend:${{ steps.version.outputs.tag }} ./Netflix-Backend
-          docker push public.ecr.aws/561966465122/netflix-clone/backend:${{ steps.version.outputs.tag }}
+          docker build -t public.ecr.aws/s5x3y1a8/netflix-clone/backend:${{ steps.version.outputs.tag }} ./Netflix-Backend
+          docker push public.ecr.aws/s5x3y1a8/netflix-clone/backend:${{ steps.version.outputs.tag }}
 
-          docker tag public.ecr.aws/561966465122/netflix-clone/backend:${{ steps.version.outputs.tag }} public.ecr.aws/561966465122/netflix-clone/backend:latest
-          docker push public.ecr.aws/561966465122/netflix-clone/backend:latest
+          docker tag public.ecr.aws/s5x3y1a8/netflix-clone/backend:${{ steps.version.outputs.tag }} public.ecr.aws/s5x3y1a8/netflix-clone/backend:latest
+          docker push public.ecr.aws/s5x3y1a8/netflix-clone/backend:latest
 
       - name: Build & Push Frontend Image
         run: |
-          docker build -t public.ecr.aws/561966465122/netflix-clone/frontend:${{ steps.version.outputs.tag }} ./Netflix-Frontend
-          docker push public.ecr.aws/561966465122/netflix-clone/frontend:${{ steps.version.outputs.tag }}
+          docker build -t public.ecr.aws/s5x3y1a8/netflix-clone/frontend:${{ steps.version.outputs.tag }} ./Netflix-Frontend
+          docker push public.ecr.aws/s5x3y1a8/netflix-clone/frontend:${{ steps.version.outputs.tag }}
 
-          docker tag public.ecr.aws/561966465122/netflix-clone/frontend:${{ steps.version.outputs.tag }} public.ecr.aws/561966465122/netflix-clone/frontend:latest
-          docker push public.ecr.aws/561966465122/netflix-clone/frontend:latest
+          docker tag public.ecr.aws/s5x3y1a8/netflix-clone/frontend:${{ steps.version.outputs.tag }} public.ecr.aws/s5x3y1a8/netflix-clone/frontend:latest
+          docker push public.ecr.aws/s5x3y1a8/netflix-clone/frontend:latest
