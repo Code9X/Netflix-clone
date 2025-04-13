@@ -1,6 +1,5 @@
 name: Build and Push Docker images to AWS ECR
 
-# Manual trigger
 on:
   workflow_dispatch:
 
@@ -22,6 +21,13 @@ jobs:
       - name: Login to Amazon ECR
         run: |
           aws ecr-public get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin public.ecr.aws/s5x3y1a8
+
+      - name: Copy appsettings template
+        run: cp ./Netflix-Backend/appsettings.template.json ./Netflix-Backend/appsettings.json
+
+      - name: Inject API Token into appsettings.json
+        run: |
+          sed -i "s|\"ApiToken\": \".*\"|\"ApiToken\": \"${{ secrets.API_TOKEN }}\"|" ./Netflix-Backend/appsettings.json
 
       - name: Build and Push Frontend Docker Image
         run: |
