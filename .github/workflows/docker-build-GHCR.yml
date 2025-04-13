@@ -1,9 +1,14 @@
-name: Auto Version and Push Docker Images
+name: Push Docker Images to GHCR
 
+# Automatically Triggers the WorkFlow
+# on:
+#   push:
+#     branches:
+#       - main
+
+# Triggers the WorkFlow only when manually do so
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   build-and-push:
