@@ -1,4 +1,4 @@
-name: Push Docker Images to GHCR
+name: Push Docker Images to GHCR Private
 
 # Automatically Triggers the WorkFlow
 # on:
