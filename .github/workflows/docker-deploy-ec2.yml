@@ -1,0 +1,54 @@
+name: Deploy Docker images to EC2 from ECR
+
+on:
+  workflow_run:
+    workflows: ["docker-build-ECR.yml"]
+    types:
+      - completed
+
+jobs:
+  deploy-to-ec2:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: SSH to EC2 and deploy Docker containers
+        env:
+          EC2_PUBLIC_IP: ${{ secrets.EC2_PUBLIC_IP }}
+          EC2_SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+        run: |
+          # Save the private key as a file
+          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+
+          # SSH into the EC2 instance
+          ssh -i private_key.pem -o StrictHostKeyChecking=no ec2-user@$EC2_PUBLIC_IP << 'EOF'
+            # Pull the latest Docker images from ECR
+            aws ecr-public get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin public.ecr.aws/s5x3y1a8
+            
+            # Pull frontend image
+            docker pull public.ecr.aws/s5x3y1a8/netflix-clone/frontend:latest
+
+            # Pull backend image
+            docker pull public.ecr.aws/s5x3y1a8/netflix-clone/backend:latest
+
+            # Stop and remove the existing containers
+            docker stop netflix-frontend || true
+            docker rm netflix-frontend || true
+            docker stop netflix-backend || true
+            docker rm netflix-backend || true
+
+            # Run the new containers with specific ports
+            docker run -d -p 9090:8080 --name netflix-backend public.ecr.aws/s5x3y1a8/netflix-clone/backend:latest
+            docker run -d -p 80:80 --name netflix-frontend public.ecr.aws/s5x3y1a8/netflix-clone/frontend:latest
+          EOF
+          rm private_key.pem
