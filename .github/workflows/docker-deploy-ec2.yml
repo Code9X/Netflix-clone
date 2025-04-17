@@ -2,7 +2,7 @@ name: Deploy Docker images to EC2 from ECR
 
 on:
   workflow_run:
-    workflows: ["docker-build-ECR.yml"]
+    workflows: ["docker-build-ecr.yml"]
     types:
       - completed
 
