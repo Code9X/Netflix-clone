@@ -7,7 +7,7 @@ const Loader = ({ loading }) => {
   return (
     <div className="loader-overlay">
       <img
-        src="/src/assets/netflix_spinner.gif"
+        src="\public\netflix_spinner.gif"
         alt="Loading..."
         className="spinner"
       />
