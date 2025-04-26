@@ -30,12 +30,12 @@ namespace netflix_backend.Controllers
             return response;
         }
         [HttpGet("TV/Get")]
-        public async Task<MovieListResponse> GetTVListAsync(string? title, string? type, string? fromDate, string? toDate, int? page)
+        public async Task<TVShowListResponse> GetTVListAsync(int? Id, string? type, string? fromDate, string? toDate, int? page)
         {
-            var response = new MovieListResponse();
+            var response = new TVShowListResponse();
             try
             {
-                return await _movieService.GetTVListAsync(title, type, fromDate, toDate, page);
+                return await _movieService.GetTVListAsync(Id, type, fromDate, toDate, page);
             }
             catch (Exception)
             {
@@ -45,12 +45,12 @@ namespace netflix_backend.Controllers
             return response;
         }
         [HttpGet("Get/VideoURL")]
-        public async Task<string?> GetVideoURL(int movieId)
+        public async Task<string?> GetVideoURL(int movieId, string? category = null)
         {
             var response = new MovieListResponse();
             try
             {
-                return await _movieService.GetVideoURL(movieId);
+                return await _movieService.GetVideoURL(movieId, category);
             }
             catch (Exception)
             {
