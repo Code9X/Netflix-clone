@@ -49,7 +49,7 @@ namespace netflix_backend.Repository.impl
                         "thriller" => $"https://api.themoviedb.org/3/discover/movie?with_genres=53&page={page ?? 1}",
                         "crime" => $"https://api.themoviedb.org/3/discover/movie?with_genres=80&page={page ?? 1}",
                         "family" => $"https://api.themoviedb.org/3/discover/movie?with_genres=10751&page={page ?? 1}",
-                        "documentary" => $"https://api.themoviedb.org/3/discover/movie?with_genres=99&page={page ?? 1}",
+                        "documentary" => $"https://api.themoviedb.org/3/discover/movie?with_genres=99&page={page ?? 1}", 
                         _ => $"https://api.themoviedb.org/3/movie/popular?page={page ?? 1}"
                     };
                 }
