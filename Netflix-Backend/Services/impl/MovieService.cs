@@ -16,14 +16,14 @@ namespace netflix_backend.Services.impl
             return _movieRepository.GetMovieListAsync(title, type, fromDate, toDate, page);
         }
 
-        public Task<MovieListResponse> GetTVListAsync(string? title, string? type, string? fromDate, string? toDate, int? page)
+        public Task<TVShowListResponse> GetTVListAsync(int? Id, string? type, string? fromDate, string? toDate, int? page)
         {
-            return _movieRepository.GetTVListAsync(title, type, fromDate, toDate, page);
+            return _movieRepository.GetTVListAsync(Id, type, fromDate, toDate, page);
         }
 
-        public Task<string?> GetVideoURL(int movieId)
+        public Task<string?> GetVideoURL(int movieId, string? category = null)
         {
-            return _movieRepository.GetVideoURL(movieId);
+            return _movieRepository.GetVideoURL(movieId, category);
         }
     }
 }

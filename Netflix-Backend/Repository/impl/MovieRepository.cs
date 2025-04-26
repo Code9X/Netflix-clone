@@ -43,6 +43,7 @@ namespace netflix_backend.Repository.impl
                         "horror" => $"https://api.themoviedb.org/3/discover/movie?with_genres=27&page={page ?? 1}",
                         "romance" => $"https://api.themoviedb.org/3/discover/movie?with_genres=10749&page={page ?? 1}",
                         "animation" => $"https://api.themoviedb.org/3/discover/movie?with_genres=16&page={page ?? 1}",
+                        "cartoon" => $"https://api.themoviedb.org/3/discover/movie?with_genres=16&certification_country=US&certification.lte=G&page={page ?? 1}",
                         "sci-fi" => $"https://api.themoviedb.org/3/discover/movie?with_genres=878&page={page ?? 1}",
                         "fantasy" => $"https://api.themoviedb.org/3/discover/movie?with_genres=14&page={page ?? 1}",
                         "thriller" => $"https://api.themoviedb.org/3/discover/movie?with_genres=53&page={page ?? 1}",
@@ -85,18 +86,18 @@ namespace netflix_backend.Repository.impl
 
             return response;
         }
-        public async Task<MovieListResponse> GetTVListAsync(string? title, string? type, string? fromDate, string? toDate, int? page)
+        public async Task<TVShowListResponse> GetTVListAsync(int? Id, string? type, string? fromDate, string? toDate, int? page)
         {
-            var response = new MovieListResponse();
+            var response = new TVShowListResponse();
             try
             {
                 var token = _configuration["AppSettings:ApiToken"];
                 var fulltoken = "Bearer " + token;
                 string apiUrl;
 
-                if (!string.IsNullOrEmpty(title))
+                if (Id != null && Id > 0)
                 {
-                    apiUrl = $"https://api.themoviedb.org/3/search/tv?query={Uri.EscapeDataString(title)}&page={page ?? 1}";
+                    apiUrl = $"https://api.themoviedb.org/3/tv/{Id}";
                 }
                 else
                 {
@@ -107,14 +108,6 @@ namespace netflix_backend.Repository.impl
                         "top_rated" => $"https://api.themoviedb.org/3/tv/top_rated?page={page ?? 1}",
                         "airing_today" => $"https://api.themoviedb.org/3/tv/airing_today?page={page ?? 1}",
                         "on_the_air" => $"https://api.themoviedb.org/3/tv/on_the_air?page={page ?? 1}",
-                        "action" => $"https://api.themoviedb.org/3/discover/tv?with_genres=10759&page={page ?? 1}",
-                        "comedy" => $"https://api.themoviedb.org/3/discover/tv?with_genres=35&page={page ?? 1}",
-                        "drama" => $"https://api.themoviedb.org/3/discover/tv?with_genres=18&page={page ?? 1}",
-                        "documentary" => $"https://api.themoviedb.org/3/discover/tv?with_genres=99&page={page ?? 1}",
-                        "family" => $"https://api.themoviedb.org/3/discover/tv?with_genres=10751&page={page ?? 1}",
-                        "reality" => $"https://api.themoviedb.org/3/discover/tv?with_genres=10764&page={page ?? 1}",
-                        "sci-fi" => $"https://api.themoviedb.org/3/discover/tv?with_genres=10765&page={page ?? 1}",
-                        "mystery" => $"https://api.themoviedb.org/3/discover/tv?with_genres=9648&page={page ?? 1}",
                         _ => $"https://api.themoviedb.org/3/tv/popular?page={page ?? 1}"
                     };
                 }
@@ -137,7 +130,36 @@ namespace netflix_backend.Repository.impl
                 }
 
                 string jsonResponse = await httpResponse.Content.ReadAsStringAsync();
-                response = JsonSerializer.Deserialize<MovieListResponse>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                if (Id != null && Id > 0)
+                {
+                    var singleItem = JsonSerializer.Deserialize<TVShowListResponse>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                    response = new TVShowListResponse
+                    {
+                        Id = singleItem.Id,
+                        Name = singleItem.Name,
+                        Overview = singleItem.Overview,
+                        PosterPath = singleItem.PosterPath,
+                        BackdropPath = singleItem.BackdropPath,
+                        VoteAverage = singleItem.VoteAverage,
+                        NumberOfSeasons = singleItem.NumberOfSeasons,
+                        NumberOfEpisodes = singleItem.NumberOfEpisodes,
+                        Genres = singleItem.Genres,
+                        FirstAirDate = singleItem.FirstAirDate,
+                        Results = new List<TVItem>(),
+                        Page = 1
+                    };
+                }
+                else
+                {
+                    response = JsonSerializer.Deserialize<TVShowListResponse>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                    // Ensure backdrop_path is mapped for each TVItem
+                    foreach (var item in response.Results)
+                    {
+                        item.BackdropPath = item.BackdropPath;
+                    }
+                }
 
                 response.StatusCode = "200";
                 response.Message = "Success";
@@ -150,12 +172,22 @@ namespace netflix_backend.Repository.impl
 
             return response;
         }
-        public async Task<string?> GetVideoURL(int movieId)
+        public async Task<string?> GetVideoURL(int movieId, string? category = null)
         {
             try
             {
                 var token = _configuration["AppSettings:ApiToken"];
-                var apiUrl = $"https://api.themoviedb.org/3/movie/{movieId}/videos";
+                var apiUrl = "";
+
+                if (category == "tvshows")
+                {
+                    apiUrl = $"https://api.themoviedb.org/3/tv/{movieId}/videos";
+                }
+                else
+                {
+                    apiUrl = $"https://api.themoviedb.org/3/movie/{movieId}/videos";
+                }
+
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 var response = await _httpClient.GetAsync(apiUrl);
