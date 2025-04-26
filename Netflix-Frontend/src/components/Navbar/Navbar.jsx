@@ -28,7 +28,7 @@ function Navbar() {
         <ul>
           <li><Link to="/">Home</Link></li>
           <li><Link to="/tvshows">TV Shows</Link></li>
-          <li>Movies</li>
+          <li><Link to="/movies">Movies</Link></li>
           <li>New & Popular</li>
           <li>My List</li>
           <li>Browse by Languages</li>
@@ -36,13 +36,13 @@ function Navbar() {
       </div>
       <div className="navbar-right">
         <img src={search_icon} alt="" className='icons' />
-        <p>Children</p>
+        <li><Link to="/children">Children</Link></li>
         <img src={bell_icon} alt="" className='icons' />
         <div className="navbar-profile">
           <img src={profile_img} alt="" className='profile' />
           <img src={caret_icon} alt="" />
           <div className="dropdown">
-            <p>Sign out</p>
+            <li><Link to="/login">Sign out</Link></li>
           </div>
         </div>
       </div>

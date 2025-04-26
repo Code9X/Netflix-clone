@@ -90,18 +90,22 @@ function TitleCards({ title,category=null, type = null }) {
 
   const handleCardClick = async (movieId) => {
     try {
-      const videoApiUrl = `${import.meta.env.VITE_MOVIE_API}/api/Get/VideoURL?movieId=${movieId}`;
+      let videoApiUrl = `${import.meta.env.VITE_MOVIE_API}/api/Get/VideoURL?movieId=${movieId}`;
+      if (category) {
+        videoApiUrl += `&category=${category}`;
+      }
+  
       const response = await fetch(videoApiUrl);
       const embedUrl = await response.text();
-
+  
       if (!embedUrl) {
         alert("No trailer found.");
         return;
       }
-
+  
       const match = embedUrl.match(/embed\/([^?&]+)/);
       const videoId = match ? match[1] : null;
-
+  
       if (videoId) {
         navigate(`/player/${movieId}`, { state: { embedUrl } });
       } else {
@@ -111,7 +115,7 @@ function TitleCards({ title,category=null, type = null }) {
       console.error("Error fetching trailer URL:", error);
       alert("Failed to load trailer.");
     }
-  };
+  };  
 
   const lastMovieRef = useCallback((node) => {
     if (loading || useStatic) return;
