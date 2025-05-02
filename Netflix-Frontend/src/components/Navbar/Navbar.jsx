@@ -6,10 +6,12 @@ import bell_icon from '../../assets/bell_icon.svg'
 import profile_img from '../../assets/profile_img.png'
 import caret_icon from '../../assets/caret_icon.svg'
 import { Link } from 'react-router-dom';
+import { useKeycloak } from '@react-keycloak/web';
 
 function Navbar() {
 
   const navRef = useRef(null);
+  const { keycloak } = useKeycloak();
 
   useEffect(()=>{
     window. addEventListener('scroll', ()=>{
@@ -42,8 +44,11 @@ function Navbar() {
           <img src={profile_img} alt="" className='profile' />
           <img src={caret_icon} alt="" />
           <div className="dropdown">
-            <li><Link to="/login">Sign out</Link></li>
-          </div>
+          <li className="username">Hello {keycloak.tokenParsed?.preferred_username}!</li>
+          <li className="signout" onClick={() => keycloak.logout({ redirectUri: window.location.origin })}>
+            Sign out
+          </li>
+        </div>
         </div>
       </div>
     </div>

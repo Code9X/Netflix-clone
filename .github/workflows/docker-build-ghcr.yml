@@ -1,9 +1,14 @@
-name: Auto Version and Push Docker Images
+name: Push Docker Images to GHCR Private
 
+# Automatically Triggers the WorkFlow
+# on:
+#   push:
+#     branches:
+#       - main
+
+# Triggers the WorkFlow only when manually do so
 on:
-  push:
-    branches:
-      - main 
+  workflow_dispatch:
 
 jobs:
   build-and-push:
@@ -42,12 +47,18 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
+      - name: Copy appsettings template
+        run: cp ./Netflix-Backend/appsettings.template.json ./Netflix-Backend/appsettings.json
+
+      - name: Inject API Token into appsettings.json
+        run: |
+          sed -i "s|\"ApiToken\": \".*\"|\"ApiToken\": \"${{ secrets.API_TOKEN }}\"|" ./Netflix-Backend/appsettings.json
+
       - name: Build & Push Backend Image
         run: |
           docker build -t ghcr.io/code9x/netflix-backend:${{ steps.version.outputs.tag }} ./Netflix-Backend
           docker push ghcr.io/code9x/netflix-backend:${{ steps.version.outputs.tag }}
 
-          # Also tag and push as latest
           docker tag ghcr.io/code9x/netflix-backend:${{ steps.version.outputs.tag }} ghcr.io/code9x/netflix-backend:latest
           docker push ghcr.io/code9x/netflix-backend:latest
 
@@ -56,6 +67,5 @@ jobs:
           docker build -t ghcr.io/code9x/netflix-frontend:${{ steps.version.outputs.tag }} ./Netflix-Frontend
           docker push ghcr.io/code9x/netflix-frontend:${{ steps.version.outputs.tag }}
 
-          # Also tag and push as latest
           docker tag ghcr.io/code9x/netflix-frontend:${{ steps.version.outputs.tag }} ghcr.io/code9x/netflix-frontend:latest
           docker push ghcr.io/code9x/netflix-frontend:latest

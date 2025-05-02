@@ -1,0 +1,58 @@
+name: Deploy Docker images to EC2 from ECR
+
+on:
+  workflow_run:
+    workflows: ["Build and Push Docker images to AWS ECR"]
+    types:
+      - completed
+
+jobs:
+  deploy-to-ec2:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: SSH to EC2 and deploy Docker containers
+        env:
+          EC2_PUBLIC_IP: ${{ secrets.EC2_PUBLIC_IP }}
+          EC2_SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+        run: |
+          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+          ssh -i private_key.pem -o StrictHostKeyChecking=no ubuntu@$EC2_PUBLIC_IP << 'EOF'
+            if ! command -v aws &> /dev/null; then
+              echo "Installing AWS CLI..."
+              sudo apt update
+              sudo apt install -y awscli
+            fi
+
+            if ! command -v docker &> /dev/null; then
+              echo "Installing Docker..."
+              sudo apt install -y docker.io
+              sudo systemctl start docker
+              sudo systemctl enable docker
+            fi
+
+            aws ecr-public get-login-password --region $AWS_REGION | sudo docker login --username AWS --password-stdin public.ecr.aws/s5x3y1a8
+            
+            sudo docker stop netflix-frontend || true
+            sudo docker rm netflix-frontend || true
+            sudo docker stop netflix-backend || true
+            sudo docker rm netflix-backend || true
+
+            sudo docker pull public.ecr.aws/s5x3y1a8/netflix-clone/frontend:latest
+            sudo docker pull public.ecr.aws/s5x3y1a8/netflix-clone/backend:latest
+
+            sudo docker run -d --restart=always -p 9090:8080 --name netflix-backend public.ecr.aws/s5x3y1a8/netflix-clone/backend:latest
+            sudo docker run -d --restart=always -p 80:80 --name netflix-frontend public.ecr.aws/s5x3y1a8/netflix-clone/frontend:latest
+          EOF
+          rm private_key.pem
