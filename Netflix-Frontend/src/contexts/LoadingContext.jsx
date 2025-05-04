@@ -8,7 +8,7 @@ export const LoadingProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
   const setLoadingContext = (state) => {
-    setLoading(state); // Update loading state
+    setLoading(state);
   };
 
   return (
