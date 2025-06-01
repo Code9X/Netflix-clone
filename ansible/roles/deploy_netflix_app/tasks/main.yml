@@ -7,8 +7,12 @@
 
 - name: Pull netflix-backend image
   community.docker.docker_image:
-    name: "{{ netflix_backend_image }}"
-    pull: yes
+    name: "{{ backend_image_name }}"
+    tag: "{{ backend_image_tag }}"
+    source: pull
+    login_username: AWS
+    login_password: "{{ lookup('env', 'AWS_ECR_PUBLIC_TOKEN') }}"
+  register: backend_image_pull_result
   tags: netflix_app
 
 - name: Run netflix-backend container
@@ -22,13 +26,15 @@
     ports:
       - "{{ netflix_backend_port_host }}:{{ netflix_backend_port_container }}"
     # Pass environment variables defined in group_vars/all.yml and vault.yml
-    env: "{{ netflix_backend_env }}" # <--- ENSURE THIS LINE IS PRESENT AND CORRECT
+    env: "{{ netflix_backend_env }}"
   tags: netflix_app
 
 - name: Pull netflix-frontend image
   community.docker.docker_image:
     name: "{{ netflix_frontend_image }}"
     pull: yes
+    login_username: AWS
+    login_password: "{{ lookup('env', 'AWS_ECR_PUBLIC_TOKEN') }}"
   tags: netflix_app
 
 - name: Run netflix-frontend container
@@ -42,7 +48,7 @@
     ports:
       - "{{ netflix_frontend_port_host }}:{{ netflix_frontend_port_container }}"
     # Pass environment variables defined in group_vars/all.yml
-    env: "{{ netflix_frontend_env }}" # <--- ENSURE THIS LINE IS PRESENT AND CORRECT
+    env: "{{ netflix_frontend_env }}"
   tags: netflix_app
 
 - name: Ensure netflix_app services are started and enabled (systemd or similar, if applicable)
