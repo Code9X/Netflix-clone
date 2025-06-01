@@ -1,0 +1,37 @@
+- name: Remove any existing Keycloak container
+  docker_container:
+    name: keycloak
+    state: absent
+    force_kill: yes
+  tags: keycloak
+
+- name: Ensure Keycloak data volume is absent for a clean start
+  docker_volume:
+    name: keycloak_data
+    state: absent
+  ignore_errors: true
+  tags: keycloak
+
+- name: Run Keycloak container in HTTP mode
+  docker_container:
+    name: keycloak
+    image: quay.io/keycloak/keycloak:22.0.5
+    state: started
+    restart_policy: always
+    recreate: yes
+    ports:
+      - "8080:8080"
+    env:
+      KC_HTTP_ENABLED: "true"
+      KC_PROXY: "edge"
+      KC_HOSTNAME_URL: "https://{{ subdomain_name }}"
+      KC_HTTP_PORT: "8080"
+      KC_HTTPS_PORT: "443"
+      KC_HOSTNAME_STRICT: "false"
+      KC_TRUST_PROXY_HEADERS: "true"
+      KEYCLOAK_ADMIN: "{{ keycloak_admin_env.KEYCLOAK_ADMIN }}"
+      KEYCLOAK_ADMIN_PASSWORD: "{{ keycloak_admin_env.KEYCLOAK_ADMIN_PASSWORD }}"
+    command: start
+    volumes:
+      - keycloak_data:/opt/keycloak/data
+  tags: keycloak

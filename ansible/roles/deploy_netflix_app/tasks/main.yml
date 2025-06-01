@@ -1,0 +1,58 @@
+- name: Login to ECR Public
+  community.docker.docker_login:
+    registry_url: public.ecr.aws
+    username: AWS
+    password: "{{ lookup('env', 'AWS_ECR_PUBLIC_TOKEN') }}" # This should be set in your GitHub Actions secret
+  tags: netflix_app
+
+- name: Pull netflix-backend image
+  community.docker.docker_image:
+    name: "{{ netflix_backend_image }}"
+    pull: yes
+  tags: netflix_app
+
+- name: Run netflix-backend container
+  community.docker.docker_container:
+    name: netflix-backend
+    image: "{{ netflix_backend_image }}"
+    state: started
+    restart_policy: always
+    recreate: yes
+    # Expose the backend container's internal port to a host port
+    ports:
+      - "{{ netflix_backend_port_host }}:{{ netflix_backend_port_container }}"
+    # Pass environment variables defined in group_vars/all.yml and vault.yml
+    env: "{{ netflix_backend_env }}" # <--- ENSURE THIS LINE IS PRESENT AND CORRECT
+  tags: netflix_app
+
+- name: Pull netflix-frontend image
+  community.docker.docker_image:
+    name: "{{ netflix_frontend_image }}"
+    pull: yes
+  tags: netflix_app
+
+- name: Run netflix-frontend container
+  community.docker.docker_container:
+    name: netflix-frontend
+    image: "{{ netflix_frontend_image }}"
+    state: started
+    restart_policy: always
+    recreate: yes
+    # Expose the frontend container's internal port to a host port
+    ports:
+      - "{{ netflix_frontend_port_host }}:{{ netflix_frontend_port_container }}"
+    # Pass environment variables defined in group_vars/all.yml
+    env: "{{ netflix_frontend_env }}" # <--- ENSURE THIS LINE IS PRESENT AND CORRECT
+  tags: netflix_app
+
+- name: Ensure netflix_app services are started and enabled (systemd or similar, if applicable)
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  loop:
+    - docker
+  # You might not need this if Docker is already managed by a service or just ensure it's running
+  # This task is more for ensuring Docker service itself is running
+  ignore_errors: yes # Ignore errors if systemd is not present or service name is different
+  tags: netflix_app

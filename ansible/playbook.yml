@@ -1,0 +1,9 @@
+- name: Provision EC2 Instance
+  hosts: web
+  become: true
+  roles:
+    - install_docker
+    - configure_ssl      # get all certificates first
+    - setup_keycloak     # run Keycloak in HTTP mode on 8080
+    - setup_nginx        # Nginx listens on 443 and proxies to 8080
+    - deploy_netflix_app
