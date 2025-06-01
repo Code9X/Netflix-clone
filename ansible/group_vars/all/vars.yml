@@ -2,7 +2,7 @@ domain_name: netflixclone.live
 subdomain_name: auth.netflixclone.live
 email: sebinsaji0809@gmail.com
 
-# Netflix Clone application details
+# Netflix Clone application
 frontend_domain: netflixclone.live
 backend_api_domain: api.netflixclone.live
 
@@ -21,4 +21,4 @@ netflix_frontend_env:
   VITE_KEYCLOAK_CLIENT_ID: "Netflix-App"
   VITE_MOVIE_API: "https://{{ backend_api_domain }}"
 
-# IMPORTANT: netflix_backend_env is now defined in ansible/group_vars/all/vault.yml
+# netflix_backend_env is now defined in ansible/group_vars/all/vault.yml
