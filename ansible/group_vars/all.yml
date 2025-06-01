@@ -1,0 +1,24 @@
+domain_name: netflixclone.live
+subdomain_name: auth.netflixclone.live
+email: sebinsaji0809@gmail.com
+
+# Netflix Clone application details
+frontend_domain: netflixclone.live
+backend_api_domain: api.netflixclone.live
+
+netflix_frontend_image: public.ecr.aws/s5x3y1a8/netflix-clone/frontend:latest
+netflix_frontend_port_host: 3000 # NGINX will proxy to this host port
+netflix_frontend_port_container: 80 # Frontend container listens on this port
+
+netflix_backend_image: public.ecr.aws/s5x3y1a8/netflix-clone/backend:latest
+netflix_backend_port_host: 9090
+netflix_backend_port_container: 8080
+
+# Environment variables for your frontend application (used at build time by React/Vite)
+netflix_frontend_env:
+  VITE_KEYCLOAK_URL: "https://{{ subdomain_name }}/" # This will be the URL for Keycloak
+  VITE_KEYCLOAK_REALM: "Netflix"
+  VITE_KEYCLOAK_CLIENT_ID: "Netflix-App"
+  VITE_MOVIE_API: "https://{{ backend_api_domain }}"
+
+# IMPORTANT: netflix_backend_env is now defined in ansible/group_vars/all/vault.yml

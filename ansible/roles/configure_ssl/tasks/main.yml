@@ -1,0 +1,15 @@
+- name: Install Certbot
+  apt:
+    name: certbot
+    state: present
+    update_cache: yes
+    
+- name: Obtain SSL for Main App
+  shell: certbot certonly --standalone --non-interactive --preferred-challenges http --agree-tos -m {{ email }} -d {{ domain_name }}
+  args:
+    creates: /etc/letsencrypt/live/{{ domain_name }}/fullchain.pem
+
+- name: Obtain SSL certificate for Keycloak
+  shell: certbot certonly --standalone --non-interactive --preferred-challenges http --agree-tos -m {{ email }} -d {{ subdomain_name  }}
+  args:
+    creates: /etc/letsencrypt/live/{{ subdomain_name }}/fullchain.pem
