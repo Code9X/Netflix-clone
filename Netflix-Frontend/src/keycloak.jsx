@@ -1,11 +1,9 @@
 import Keycloak from 'keycloak-js';
 
 const keycloak = new Keycloak({
-  url: 'https://13.202.25.33:8443/',
-  realm: 'Netflix',
-  clientId: 'Netflix-App',
+  url: import.meta.env.VITE_KEYCLOAK_URL,
+  realm: import.meta.env.VITE_KEYCLOAK_REALM,
+  clientId: import.meta.env.VITE_KEYCLOAK_CLIENT_ID
 });
 
 export default keycloak;
-
-//Local : url: 'http://localhost:8180/'

@@ -1,0 +1,29 @@
+- name: Install NGINX
+  apt:
+    name: nginx
+    state: present
+    update_cache: true
+
+- name: Copy NGINX config from template
+  template:
+    src: site_config.j2
+    dest: /etc/nginx/sites-available/site_config
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Enable site by creating symlink
+  file:
+    src: /etc/nginx/sites-available/site_config
+    dest: /etc/nginx/sites-enabled/site_config
+    state: link
+    force: true
+
+- name: Remove default site (optional)
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+    force: true
+
+- name: Test and reload NGINX
+  shell: nginx -t && systemctl reload nginx
