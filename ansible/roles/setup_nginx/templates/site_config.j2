@@ -1,15 +1,71 @@
+# Redirect HTTP to HTTPS for all domains
 server {
-  listen 443 ssl;
-  server_name auth.netflixclone.live;
+    listen 80;
+    listen [::]:80;
+    server_name {{ frontend_domain }} {{ backend_api_domain }} {{ subdomain_name }};
 
-  ssl_certificate     /etc/letsencrypt/live/auth.netflixclone.live/fullchain.pem;
-  ssl_certificate_key /etc/letsencrypt/live/auth.netflixclone.live/privkey.pem;
+    return 301 https://$host$request_uri;
+}
 
-  location / {
-    proxy_pass       http://127.0.0.1:8080;
-    proxy_set_header Host               $host;
-    proxy_set_header X-Real-IP          $remote_addr;
-    proxy_set_header X-Forwarded-For    $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto  $scheme;
-  }
+# Frontend Application (netflixclone.live)
+server {
+    listen 443 ssl;
+    server_name {{ frontend_domain }};
+
+    ssl_certificate /etc/letsencrypt/live/{{ frontend_domain }}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/{{ frontend_domain }}/privkey.pem;
+
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    location / {
+        proxy_pass http://127.0.0.1:{{ netflix_frontend_port_host }};
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 900;
+    }
+}
+
+# Backend API (api.netflixclone.live)
+server {
+    listen 443 ssl;
+    server_name {{ backend_api_domain }};
+
+    ssl_certificate /etc/letsencrypt/live/{{ backend_api_domain }}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/{{ backend_api_domain }}/privkey.pem;
+
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    location / {
+        proxy_pass http://127.0.0.1:{{ netflix_backend_port_host }};
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 900;
+    }
+}
+
+# Keycloak (auth.netflixclone.live)
+server {
+    listen 443 ssl;
+    server_name {{ subdomain_name }}; # This is auth.netflixclone.live
+
+    ssl_certificate /etc/letsencrypt/live/{{ subdomain_name }}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/{{ subdomain_name }}/privkey.pem;
+
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    location / {
+        proxy_pass http://127.0.0.1:{{ keycloak_port_host }}; # Assuming you have a keycloak_port_host in vars.yml, otherwise it's 8080
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 900;
+    }
 }
