@@ -7,10 +7,8 @@
 
 - name: Pull netflix-backend image
   community.docker.docker_image:
-    name: "{{ netflix_backend_image }}" # Changed from backend_image_name
-    source: pull
-    login_username: AWS
-    login_password: "{{ lookup('env', 'AWS_ECR_PUBLIC_TOKEN') }}"
+    name: "{{ netflix_backend_image }}"
+    source: pull # 'pull' is implicitly 'yes' if source is 'pull'
   register: backend_image_pull_result
   tags: netflix_app
 
@@ -30,10 +28,8 @@
 
 - name: Pull netflix-frontend image
   community.docker.docker_image:
-    name: "{{ netflix_frontend_image }}" # Changed from netflix_frontend_image_name/tag
-    pull: yes
-    login_username: AWS
-    login_password: "{{ lookup('env', 'AWS_ECR_PUBLIC_TOKEN') }}"
+    name: "{{ netflix_frontend_image }}"
+    pull: yes # 'pull: yes' is correct here, as it's a shorthand for source: pull
   tags: netflix_app
 
 - name: Run netflix-frontend container
