@@ -7,7 +7,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: production
-
     if: github.event_name == 'workflow_dispatch'
 
     steps:
@@ -47,6 +46,7 @@ jobs:
 
       - name: Run Ansible Playbook to Deploy
         run: |
+          # THIS LINE IS CRUCIAL - BOTH PATHS NEED 'ansible/' PREFIX
           ansible-playbook -i ansible/inventory.ini ansible/playbook.yml \
             --vault-password-file <(echo "${{ secrets.ANSIBLE_VAULT_PASSWORD }}")
         env:
