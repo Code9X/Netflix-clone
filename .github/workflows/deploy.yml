@@ -34,13 +34,20 @@ jobs:
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          ssh-keyscan: '13.127.147.108' 
+          ssh-keyscan: '13.127.147.108' # Ensure this is the correct IP or remove if dynamic
 
       - name: Install Ansible and Docker Python Library
         run: |
           sudo apt-get update
           sudo apt-get install -y ansible python3-pip
           pip3 install docker # Install docker Python library for Ansible's docker modules
+
+      - name: Install Ansible Collections
+        run: |
+          ansible-galaxy collection install community.general
+          # If you ever need other collections, add them here:
+          # ansible-galaxy collection install another.collection
+        working-directory: ansible # Ensure it runs from where ansible-galaxy expects config
 
       - name: Ensure correct permissions for inventory
         run: chmod 600 ansible/inventory.ini
