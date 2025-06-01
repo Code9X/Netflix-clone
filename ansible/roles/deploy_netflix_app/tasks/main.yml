@@ -2,13 +2,13 @@
   community.docker.docker_login:
     registry_url: public.ecr.aws
     username: AWS
-    password: "{{ lookup('env', 'AWS_ECR_PUBLIC_TOKEN') }}" # This should be set in your GitHub Actions secret
+    password: "{{ lookup('env', 'AWS_ECR_PUBLIC_TOKEN') }}"
   tags: netflix_app
 
 - name: Pull netflix-backend image
   community.docker.docker_image:
     name: "{{ netflix_backend_image }}"
-    source: pull # 'pull' is implicitly 'yes' if source is 'pull'
+    source: pull
   register: backend_image_pull_result
   tags: netflix_app
 
@@ -19,17 +19,15 @@
     state: started
     restart_policy: always
     recreate: yes
-    # Expose the backend container's internal port to a host port
     ports:
       - "{{ netflix_backend_port_host }}:{{ netflix_backend_port_container }}"
-    # Pass environment variables defined in group_vars/all.yml and vault.yml
     env: "{{ netflix_backend_env }}"
   tags: netflix_app
 
 - name: Pull netflix-frontend image
   community.docker.docker_image:
     name: "{{ netflix_frontend_image }}"
-    pull: yes # 'pull: yes' is correct here, as it's a shorthand for source: pull
+    source: pull
   tags: netflix_app
 
 - name: Run netflix-frontend container
@@ -39,10 +37,8 @@
     state: started
     restart_policy: always
     recreate: yes
-    # Expose the frontend container's internal port to a host port
     ports:
       - "{{ netflix_frontend_port_host }}:{{ netflix_frontend_port_container }}"
-    # Pass environment variables defined in group_vars/all.yml
     env: "{{ netflix_frontend_env }}"
   tags: netflix_app
 
