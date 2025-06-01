@@ -22,3 +22,6 @@ netflix_frontend_env:
   VITE_MOVIE_API: "https://{{ backend_api_domain }}"
 
 # netflix_backend_env is now defined in ansible/group_vars/all/vault.yml
+
+keycloak_port_host: 8080
+force_cert_renewal: yes

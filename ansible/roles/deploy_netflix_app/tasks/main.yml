@@ -3,7 +3,7 @@
     registry_url: public.ecr.aws
     username: AWS
     password: "{{ lookup('env', 'AWS_ECR_PUBLIC_TOKEN') }}"
-  tags: netflix_app
+  tags: netflix_app 
 
 - name: Pull netflix-backend image
   community.docker.docker_image:

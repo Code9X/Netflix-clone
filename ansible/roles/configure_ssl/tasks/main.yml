@@ -1,15 +1,59 @@
 - name: Install Certbot
-  apt:
-    name: certbot
+  ansible.builtin.apt:
+    name:
+      - certbot
+      - python3-certbot-nginx
     state: present
     update_cache: yes
-    
-- name: Obtain SSL for Main App
-  shell: certbot certonly --standalone --non-interactive --preferred-challenges http --agree-tos -m {{ email }} -d {{ domain_name }}
-  args:
-    creates: /etc/letsencrypt/live/{{ domain_name }}/fullchain.pem
+  tags: configure_ssl
 
-- name: Obtain SSL certificate for Keycloak
-  shell: certbot certonly --standalone --non-interactive --preferred-challenges http --agree-tos -m {{ email }} -d {{ subdomain_name  }}
+- name: Create NGINX SSL options (dhparams)
+  community.general.command: openssl dhparam -out /etc/letsencrypt/ssl-dhparams.pem 2048
   args:
-    creates: /etc/letsencrypt/live/{{ subdomain_name }}/fullchain.pem
+    creates: /etc/letsencrypt/ssl-dhparams.pem
+  tags: configure_ssl
+
+- name: Create Certbot NGINX configuration snippet
+  ansible.builtin.copy:
+    content: |
+      ssl_session_cache shared:SSL:10m;
+      ssl_session_timeout 5m;
+      ssl_protocols TLSv1.2 TLSv1.3;
+      ssl_ciphers "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384";
+      ssl_prefer_server_ciphers on;
+      ssl_stapling on;
+      ssl_stapling_verify on;
+      resolver 8.8.8.8 8.8.4.4 valid=300s;
+      resolver_timeout 5s;
+      add_header X-Frame-Options DENY;
+      add_header X-Content-Type-Options nosniff;
+      add_header X-XSS-Protection "1; mode=block";
+    dest: /etc/letsencrypt/options-ssl-nginx.conf
+  tags: configure_ssl
+
+- name: Obtain SSL certificates for all domains via NGINX authenticator
+  community.general.acme_certificate:
+    acme_directory: https://acme-v02.api.letsencrypt.org/directory
+    account_key: "{{ lookup('file', '{{ vault_key_path }}') }}"
+    csr_directory: "{{ inventory_dir }}/ssl_csr"
+    dest: /etc/letsencrypt/live
+    domains:
+      - "{{ frontend_domain }}"
+      - "{{ backend_api_domain }}"
+      - "{{ subdomain_name }}"
+    challenge: http_01
+    challenge_info:
+      http_01:
+        type: nginx
+    terms_agreed: yes
+    email: "{{ email }}"
+    force: "{{ 'yes' if force_cert_renewal else 'no' }}"
+  register: cert_result
+  tags: configure_ssl
+
+- name: Reload NGINX if certificates were obtained or renewed
+  ansible.builtin.systemd:
+    name: nginx
+    state: reloaded
+  when: cert_result.changed
+  tags: configure_ssl
