@@ -43,7 +43,7 @@ jobs:
           pip3 install docker # Install docker Python library for Ansible's docker modules
 
       - name: Ensure correct permissions for inventory
-        run: chmod 600 inventory.ini
+        run: chmod 600 ansible/inventory.ini
 
       - name: Run Ansible Playbook to Deploy
         run: |
