@@ -47,7 +47,7 @@ jobs:
 
       - name: Run Ansible Playbook to Deploy
         run: |
-          ansible-playbook -i inventory.ini playbook.yml \
+          ansible-playbook -i ansible/inventory.ini ansible/playbook.yml \
             --vault-password-file <(echo "${{ secrets.ANSIBLE_VAULT_PASSWORD }}")
         env:
           AWS_ECR_PUBLIC_TOKEN: ${{ steps.ecr_public_login.outputs.ECR_PUBLIC_TOKEN }}
