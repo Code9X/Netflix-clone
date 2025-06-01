@@ -34,6 +34,7 @@ jobs:
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-keyscan: '13.127.147.108'
 
       - name: Install Ansible
         run: |
@@ -46,7 +47,6 @@ jobs:
 
       - name: Run Ansible Playbook to Deploy
         run: |
-          # THIS LINE IS CRUCIAL - BOTH PATHS NEED 'ansible/' PREFIX
           ansible-playbook -i ansible/inventory.ini ansible/playbook.yml \
             --vault-password-file <(echo "${{ secrets.ANSIBLE_VAULT_PASSWORD }}")
         env:
