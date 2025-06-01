@@ -7,8 +7,7 @@
 
 - name: Pull netflix-backend image
   community.docker.docker_image:
-    name: "{{ backend_image_name }}"
-    tag: "{{ backend_image_tag }}"
+    name: "{{ netflix_backend_image }}" # Changed from backend_image_name
     source: pull
     login_username: AWS
     login_password: "{{ lookup('env', 'AWS_ECR_PUBLIC_TOKEN') }}"
@@ -31,7 +30,7 @@
 
 - name: Pull netflix-frontend image
   community.docker.docker_image:
-    name: "{{ netflix_frontend_image }}"
+    name: "{{ netflix_frontend_image }}" # Changed from netflix_frontend_image_name/tag
     pull: yes
     login_username: AWS
     login_password: "{{ lookup('env', 'AWS_ECR_PUBLIC_TOKEN') }}"
@@ -58,7 +57,5 @@
     enabled: yes
   loop:
     - docker
-  # You might not need this if Docker is already managed by a service or just ensure it's running
-  # This task is more for ensuring Docker service itself is running
-  ignore_errors: yes # Ignore errors if systemd is not present or service name is different
+  ignore_errors: yes
   tags: netflix_app
