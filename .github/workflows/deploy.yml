@@ -34,6 +34,7 @@ jobs:
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          # Ensure this line is exactly correct with your EC2 IP
           ssh-keyscan: '13.127.147.108'
 
       - name: Install Ansible
@@ -52,3 +53,4 @@ jobs:
         env:
           AWS_ECR_PUBLIC_TOKEN: ${{ steps.ecr_public_login.outputs.ECR_PUBLIC_TOKEN }}
           ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
+          ANSIBLE_HOST_KEY_CHECKING: "False"
