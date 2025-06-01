@@ -8,7 +8,8 @@
   tags: configure_ssl
 
 - name: Create NGINX SSL options (dhparams)
-  community.general.command: openssl dhparam -out /etc/letsencrypt/ssl-dhparams.pem 2048
+  # Changed from community.general.command to ansible.builtin.command
+  ansible.builtin.command: openssl dhparam -out /etc/letsencrypt/ssl-dhparams.pem 2048
   args:
     creates: /etc/letsencrypt/ssl-dhparams.pem
   tags: configure_ssl
@@ -34,20 +35,20 @@
 - name: Obtain SSL certificates for all domains via NGINX authenticator
   community.general.acme_certificate:
     acme_directory: https://acme-v02.api.letsencrypt.org/directory
-    account_key: "{{ lookup('file', '{{ vault_key_path }}') }}"
+    account_key: "{{ lookup('file', '{{ vault_key_path }}') }}" # Path to your ACME account private key
     csr_directory: "{{ inventory_dir }}/ssl_csr"
     dest: /etc/letsencrypt/live
     domains:
-      - "{{ frontend_domain }}"
-      - "{{ backend_api_domain }}"
-      - "{{ subdomain_name }}"
+      - "{{ frontend_domain }}"     # netflixclone.live
+      - "{{ backend_api_domain }}"  # api.netflixclone.live
+      - "{{ subdomain_name }}"      # auth.netflixclone.live
     challenge: http_01
     challenge_info:
       http_01:
         type: nginx
     terms_agreed: yes
     email: "{{ email }}"
-    force: "{{ 'yes' if force_cert_renewal else 'no' }}"
+    force: "{{ 'yes' if force_cert_renewal else 'no' }}" # Variable to control renewal, set to 'yes' for initial run
   register: cert_result
   tags: configure_ssl
 
