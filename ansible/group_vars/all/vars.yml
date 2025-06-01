@@ -14,7 +14,7 @@ netflix_backend_image: public.ecr.aws/s5x3y1a8/netflix-clone/backend:latest
 netflix_backend_port_host: 9090
 netflix_backend_port_container: 8080
 
-# Environment variables for your frontend application (used at build time by React/Vite)
+# Environment variables for your frontend application
 netflix_frontend_env:
   VITE_KEYCLOAK_URL: "https://{{ subdomain_name }}/" # This will be the URL for Keycloak
   VITE_KEYCLOAK_REALM: "Netflix"
