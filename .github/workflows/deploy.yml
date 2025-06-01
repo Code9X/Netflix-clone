@@ -1,0 +1,82 @@
+name: Deploy Netflix Clone Apps to EC2
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    # Only run this job if it's manually triggered (workflow_dispatch)
+    if: github.event_name == 'workflow_dispatch'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Get ECR Public Login Token
+        id: ecr_public_login
+        run: |
+          # Use aws-cli to get an ECR Public login password
+          ECR_TOKEN=$(aws ecr-public get-login-password --region ${{ secrets.AWS_REGION }})
+          # Output the token so it can be used in subsequent steps via environment variables
+          echo "ECR_PUBLIC_TOKEN=$ECR_TOKEN" >> $GITHUB_OUTPUT
+        env:
+          # Ensure AWS credentials are available for this step
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+
+      - name: Set up SSH Key for Ansible
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          # Automatically scan the EC2 host key and add it to known_hosts
+          # Use the exact IP/DNS from your ansible/inventory.ini
+          ssh-keyscan: '13.127.147.108' 
+
+      - name: Install Ansible and Docker Python Library
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ansible python3-pip
+          pip3 install docker # Install docker Python library for Ansible's docker modules
+
+      - name: Ensure correct permissions for inventory
+        # The inventory.ini file is inside the 'ansible/' directory
+        run: chmod 600 ansible/inventory.ini
+
+      # --- START DEBUGGING STEPS FOR group_vars ---
+      # These steps will help confirm if ansible/group_vars/all.yml is present and readable
+      - name: Debug - List Ansible group_vars directory
+        run: ls -la ansible/group_vars/
+        
+      - name: Debug - List Ansible all subdirectory (if it exists)
+        # This checks if there's a subdirectory 'all' within group_vars
+        run: ls -la ansible/group_vars/all/
+        continue-on-error: true # Continue if 'all' directory doesn't exist
+
+      - name: Debug - Print group_vars/all.yml content
+        # Prints the content of the all.yml file, if found
+        run: cat ansible/group_vars/all.yml
+      # --- END DEBUGGING STEPS ---
+
+      - name: Run Ansible Playbook to Deploy
+        run: |
+          # Both inventory and playbook paths need to be prefixed with 'ansible/'
+          ansible-playbook -i ansible/inventory.ini ansible/playbook.yml \
+            --vault-password-file <(echo "${{ secrets.ANSIBLE_VAULT_PASSWORD }}")
+        env:
+          # Pass the ECR Public token as an environment variable to Ansible
+          AWS_ECR_PUBLIC_TOKEN: ${{ steps.ecr_public_login.outputs.ECR_PUBLIC_TOKEN }}
+          # Pass the Ansible Vault password as an environment variable
+          ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
+          # TEMPORARY: Disable SSH host key checking for debugging connectivity issues
+          # REMOVE THIS LINE ONCE SSH IS STABLE AND ssh-keyscan WORKS RELIABLY
+          ANSIBLE_HOST_KEY_CHECKING: "False"
